@@ -1,23 +1,23 @@
 # Properly dealing with vcf files
 
-## Assets with vcf files
+## Datasheets with vcf files
 
-These are the assets that have vcf files.
+These are the datasheets that have vcf files.
 
-- assets/igenomes/Bos_taurus/Ensembl/UMD3.1.yml
-- assets/igenomes/Homo_sapiens/Ensembl/GRCh37.yml
-- assets/igenomes/Homo_sapiens/GATK/b37.yml
-- assets/igenomes/Homo_sapiens/GATK/GRCh37decoy.yml
-- assets/igenomes/Homo_sapiens/GATK/GRCh38.yml
-- assets/igenomes/Homo_sapiens/GATK/hg19.yml
-- assets/igenomes/Homo_sapiens/GATK/hg38.yml
-- assets/igenomes/Homo_sapiens/UCSC/hg19.yml
-- assets/igenomes/Mus_musculus/Ensembl/GRCm38.yml
-- assets/igenomes/Rattus_norvegicus/Ensembl/Rnor_5.0.yml
-- assets/igenomes/Rattus_norvegicus/Ensembl/Rnor_6.0.yml
-- assets/igenomes/Sus_scrofa/Ensembl/Sscrofa10.2.yml
+- igenomes/Ensembl/UMD3.1.yml
+- igenomes/Ensembl/GRCh37.yml
+- igenomes/GATK/b37.yml
+- igenomes/GATK/GRCh37decoy.yml
+- igenomes/GATK/GRCh38.yml
+- igenomes/GATK/hg19.yml
+- igenomes/GATK/hg38.yml
+- igenomes/UCSC/hg19.yml
+- igenomes/Ensembl/GRCm38.yml
+- igenomes/Ensembl/Rnor_5.0.yml
+- igenomes/Ensembl/Rnor_6.0.yml
+- igenomes/Ensembl/Sscrofa10.2.yml
 
-Before [#5](https://github.com/nf-core/references-assets/pull/5), VCFs were only stored in these assets as a single vcf entry for the same genome key, but as a separate instance for each genome key.
+Before [#5](https://github.com/nf-core/references-datasheets/pull/5), VCFs were only stored in these assets as a single vcf entry for the same genome key, but as a separate instance for each genome key.
 
 The idea, listing all the VCFs and categorize them into group under the same genome key, that are ready to use for the pipelines.
 
