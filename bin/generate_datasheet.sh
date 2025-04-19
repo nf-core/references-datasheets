@@ -66,7 +66,6 @@ cp manifest.txt leftover_manifest.txt
 
 # Remove existing references yaml files
 rm -rf igenomes/
-rm -rf igenomes_no_base/
 
 # Generate base info in species/genome/build.yml
 
@@ -781,5 +780,3 @@ echo "Number of files removed: $removed_files"
 echo "Deleting tmp files"
 
 rm -rf tmp_*
-
-cp -r igenomes igenomes_no_base
