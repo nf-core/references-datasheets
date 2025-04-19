@@ -783,11 +783,3 @@ echo "Deleting tmp files"
 rm -rf tmp_*
 
 cp -r igenomes igenomes_no_base
-
-echo "Generating references yaml files with igenomes_base params"
-for file in `find igenomes/ -type f`; do
-    if [[ -f $file ]]; then
-        sed -i '1s|^|# params.igenomes_base = s3://ngi-igenomes/igenomes/\n|' "$file"
-        sed -i 's|s3://ngi-igenomes/igenomes|${params.igenomes_base}|g' "$file"
-    fi
-done
