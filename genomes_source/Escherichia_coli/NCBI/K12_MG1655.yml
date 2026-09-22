@@ -1,0 +1,7 @@
+- genome: K12_MG1655
+  fasta: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz
+  gff: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.gff.gz
+  site: https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000005845.2
+  source: NCBI
+  source_version: GCF_000005845.2
+  species: Escherichia_coli
