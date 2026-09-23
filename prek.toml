@@ -1,0 +1,33 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+exclude = "^igenomes/"
+
+[[repos]]
+repo = "https://github.com/pre-commit/pre-commit-hooks"
+rev = "v5.0.0"
+hooks = [
+  {
+    id = "check-yaml"
+  },
+  {
+    id = "trailing-whitespace"
+  },
+  {
+    id = "end-of-file-fixer"
+  }
+]
+
+[[repos]]
+repo = "https://github.com/adrienverge/yamllint"
+rev = "v1.35.1"
+hooks = [
+  {
+    id = "yamllint",
+    args = [
+      "-c",
+      ".yamllint.yaml"
+    ]
+  }
+]
