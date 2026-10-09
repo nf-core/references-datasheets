@@ -1,7 +1,5 @@
 # Created with nf-core/references
 # Source yaml: genomes_source/Homo_sapiens/GATK/GRCh38_chr22.yml
-# Keys that can hold several files (vcf_known_indels_vcf, vcf_known_indels_vcf_tbi)
-# are YAML lists; keep the vcf and tbi lists in the same order.
 - genome: GRCh38_chr22
   source: nf-core
   species: Homo_sapiens
