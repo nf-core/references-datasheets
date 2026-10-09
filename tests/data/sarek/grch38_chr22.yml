@@ -1,7 +1,8 @@
 # CI test datasheet for nf-core/sarek
-# Files come from nf-core/test-datasets; key names follow sarek pipeline parameters.
+# GRCh38 chr22 slice from nf-core/test-datasets with subset GATK bundle VCFs;
+# key names follow sarek pipeline parameters.
 # known_indels and known_indels_tbi are YAML lists to exercise multi-file keys.
-- genome: testdata.nf-core.sarek
+- genome: grch38_chr22
   source: nf-core
   species: Homo_sapiens
   dbsnp: https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz
