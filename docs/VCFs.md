@@ -150,9 +150,9 @@ string-typed consumers are unaffected.
 - igenomes/GATK/hg38.yml
 - igenomes/Ensembl/GRCm38.yml
 
-Where a `_tbi` or `_idx` key exists, it holds one entry per file in the same order. Some
-files in the bundle have no index, and those positions are `null`. A category whose files
-have no index at all gets no `_tbi` key, rather than a list of nulls.
+Where a `_tbi` key exists, it holds one entry per file in the same order. Some files in
+the bundle have no index, and those positions are `null`. A category whose files have no
+index at all gets no `_tbi` key, rather than a list of nulls.
 
 `bin/generate_datasheet.sh` writes this form now, so regenerating the assets no longer
 reintroduces repeated keys. `prek.toml` no longer excludes `igenomes/`, so yamllint's

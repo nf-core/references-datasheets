@@ -680,9 +680,9 @@ a_skip=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBund
 
 # VCF entries are accumulated per (file, category) and emitted once at the end,
 # so a category holding several files becomes a YAML list instead of repeating
-# the same key. NA marks a vcf with no .tbi/.idx in the bundle and becomes null.
+# the same key. NA marks a vcf with no .tbi in the bundle and becomes null.
 declare -a vcf_order=()
-declare -A vcf_acc=() tbi_acc=() idx_acc=() src_acc=()
+declare -A vcf_acc=() tbi_acc=() src_acc=()
 
 # emit "  key: value" for a single file, or a 4-space list for several
 emit_vcf_key() {
@@ -719,9 +719,6 @@ flush_vcf_yaml() {
         emit_vcf_key "$yaml" "$prefix" ${vcf_acc[$key]}
         if has_index ${tbi_acc[$key]}; then
             emit_vcf_key "$yaml" "${prefix}_tbi" ${tbi_acc[$key]}
-        fi
-        if has_index ${idx_acc[$key]}; then
-            emit_vcf_key "$yaml" "${prefix}_idx" ${idx_acc[$key]}
         fi
         if [ -n "${src_acc[$key]+x}" ]; then
             echo "  ${prefix}_source: \"${src_acc[$key]}\"" >> "$yaml"
@@ -801,7 +798,6 @@ do
         vcf_order+=("$vcf_key")
         vcf_acc[$vcf_key]=""
         tbi_acc[$vcf_key]=""
-        idx_acc[$vcf_key]=""
     fi
 
     vcf_acc[$vcf_key]="${vcf_acc[$vcf_key]}${vcf_acc[$vcf_key]:+ }${i}"
@@ -812,13 +808,13 @@ do
         tbi_acc[$vcf_key]="${tbi_acc[$vcf_key]}${tbi_acc[$vcf_key]:+ }NA"
     fi
 
-    if grep -q "${i}\.idx" manifest.txt; then
-        idx_acc[$vcf_key]="${idx_acc[$vcf_key]}${idx_acc[$vcf_key]:+ }${i}.idx"
-    else
-        idx_acc[$vcf_key]="${idx_acc[$vcf_key]}${idx_acc[$vcf_key]:+ }NA"
-    fi
-
+    # a category normally resolves to one source, so a second differing value
+    # means the path layout changed and the datasheet would silently drop one
     if [ "${source_vcf}" != "unknown" ]; then
+        if [ -n "${src_acc[$vcf_key]+x}" ] && [ "${src_acc[$vcf_key]}" != "${source_vcf}" ]; then
+            echo "conflicting _source for ${vcf_key}: '${src_acc[$vcf_key]}' vs '${source_vcf}'" >&2
+            exit 1
+        fi
         src_acc[$vcf_key]="${source_vcf}"
     fi
 done
