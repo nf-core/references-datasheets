@@ -154,6 +154,12 @@ Where a `_tbi` key exists, it holds one entry per file in the same order. Some f
 the bundle have no index, and those positions are `null`. A category whose files have no
 index at all gets no `_tbi` key, rather than a list of nulls.
 
+`vcf_dbsnp_vcf` and `vcf_germline_resource_vcf` stay a single string, keeping only the
+file the pipelines use. Their consumers take one file each (GenotypeGVCFs a single
+`--dbsnp`, Mutect2 a single `--germline-resource`), so a list would not validate. The
+superseded versions are listed in `a_skip` in the generator so regenerating does not
+bring them back.
+
 `bin/generate_datasheet.sh` writes this form now, so regenerating the assets no longer
 reintroduces repeated keys. `prek.toml` no longer excludes `igenomes/`, so yamllint's
 `key-duplicates` rule covers these files in CI.

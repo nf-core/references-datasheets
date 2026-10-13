@@ -18,9 +18,7 @@
     - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/NA12878.HiSeq.WGS.bwa.cleaned.raw.subset.b37.sites.vcf.gz"
     - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/NA12878.HiSeq.WGS.bwa.cleaned.raw.subset.b37.vcf.gz"
     - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/NA12878.knowledgebase.snapshot.20131119.b37.vcf.gz"
-  vcf_dbsnp_vcf:
-    - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.excluding_sites_after_129.vcf.gz"
-    - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.vcf.gz"
+  vcf_dbsnp_vcf: "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.vcf.gz"
   vcf_hapmap_vcf:
     - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/hapmap_3.3.b37.vcf.gz"
     - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/hapmap_3.3_b37_pop_stratified_af.vcf.gz"
