@@ -682,6 +682,20 @@ a_skip=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBund
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_138.hg38.vcf.gz"
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_144.hg38.vcf.gz")
 
+# Exact url -> category lookup. Matching by substring, as this used to do, is
+# unsafe: several skip entries are prefixes of the .vcf.gz they sit next to
+# (dbsnp_138.b37.vcf within dbsnp_138.b37.vcf.gz), and the right hand side of
+# =~ is a regex, so the dots in every filename are wildcards.
+declare -A vcf_category_of=()
+for u in "${a_dbsnp[@]}";             do vcf_category_of[$u]="dbsnp"; done
+for u in "${a_known_indels[@]}";      do vcf_category_of[$u]="known_indels"; done
+for u in "${a_known_snps[@]}";        do vcf_category_of[$u]="known_snps"; done
+for u in "${a_germline_resource[@]}"; do vcf_category_of[$u]="germline_resource"; done
+for u in "${a_hapmap[@]}";            do vcf_category_of[$u]="hapmap"; done
+for u in "${a_pon[@]}";               do vcf_category_of[$u]="pon"; done
+for u in "${a_other[@]}";             do vcf_category_of[$u]="other"; done
+for u in "${a_skip[@]}";              do vcf_category_of[$u]="skip"; done
+
 # VCF entries are accumulated per (file, category) and emitted once at the end,
 # so a category holding several files becomes a YAML list instead of repeating
 # the same key. NA marks a vcf with no .tbi in the bundle and becomes null.
@@ -759,35 +773,15 @@ do
         source_vcf="unknown"
     fi
 
-    if [[ ${a_skip[@]} =~ $i ]]
-    then
-        echo "${i}"
-        echo "skipping"
-        continue
-    elif [[ ${a_dbsnp[@]} =~ $i ]]
-    then
-        vcf_category="dbsnp"
-    elif [[ ${a_known_indels[@]} =~ $i ]]
-    then
-        vcf_category="known_indels"
-    elif [[ ${a_known_snps[@]} =~ $i ]]
-    then
-        vcf_category="known_snps"
-    elif [[ ${a_germline_resource[@]} =~ $i ]]
-    then
-        vcf_category="germline_resource"
-    elif [[ ${a_hapmap[@]} =~ $i ]]
-    then
-        vcf_category="hapmap"
-    elif [[ ${a_pon[@]} =~ $i ]]
-    then
-        vcf_category="pon"
-    elif [[ ${a_other[@]} =~ $i ]]
-    then
-        vcf_category="other"
-    else
+    vcf_category="${vcf_category_of[$i]:-}"
+    if [ -z "${vcf_category}" ]; then
         echo "${i}"
         echo "not categorised"
+        continue
+    fi
+    if [ "${vcf_category}" = "skip" ]; then
+        echo "${i}"
+        echo "skipping"
         continue
     fi
 

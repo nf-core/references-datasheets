@@ -27,20 +27,13 @@ The following vcf files are categorized into the following groups:
 
 #### dbsnp
 
+One per build, since dbsnp is single-file for its consumers. See "Dropping these
+files" for the superseded versions that are not catalogued.
+
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/dbsnp_138.b37.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_138.hg38.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_144.hg38.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.excluding_sites_after_129.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.excluding_sites_after_129.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_138.hg38.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_144.hg38.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_146.hg38.vcf.gz
 
 #### known_indels
@@ -82,10 +75,11 @@ s3://ngi-igenomes/igenomes/Sus_scrofa/Ensembl/Sscrofa10.2/Annotation/Variation/S
 
 #### germline_resource
 
+One per build, since Mutect2 takes a single germline resource. See "Dropping these
+files" for the gnomAD versions that are not catalogued.
+
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/af-only-gnomad.raw.sites.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh37.PASS.AC.AF.only.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/af-only-gnomad.hg38.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only.vcf.gz
 
 #### hapmap
 
@@ -127,11 +121,30 @@ s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/NISTIntegratedCalls.hg38.
 
 #### Dropping these files
 
+Uncompressed duplicates, already present as vcf.gz:
+
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/dbsnp_138.b37.vcf
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/1000G_phase1.indels.b37.vcf
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.b37.vcf
 
-They are vcf, but there is already a vcf.gz version of them.
+Superseded versions of a category whose consumer takes a single file, so the
+datasheet keeps only the one the pipelines use:
+
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh37.PASS.AC.AF.only.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_138.hg38.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_144.hg38.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.excluding_sites_after_129.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.excluding_sites_after_129.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_138.hg38.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_144.hg38.vcf.gz
+
+All of these are listed in `a_skip` in the generator, so regenerating does not
+bring them back.
 
 ### Assets with malformed vcf entries
 
