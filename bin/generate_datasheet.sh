@@ -590,20 +590,12 @@ cat manifest.txt | grep "\.vcf" | grep -v "\.idx" | grep -v "\.tbi" | grep -v "\
 
 echo "Populating references yaml files for vcf"
 
+# One dbsnp per build: dbsnp is single-file for its consumers (GenotypeGVCFs
+# takes a single --dbsnp), so the superseded versions go to a_skip below.
 a_dbsnp=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/dbsnp_138.b37.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_138.hg38.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_144.hg38.vcf.gz"
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.excluding_sites_after_129.vcf.gz"
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.excluding_sites_after_129.vcf.gz"
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_138.hg38.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_144.hg38.vcf.gz"
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_146.hg38.vcf.gz")
 
 a_known_indels=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/1000G_phase1.indels.b37.vcf.gz"
@@ -639,10 +631,10 @@ a_known_snps=("s3://ngi-igenomes/igenomes/Bos_taurus/Ensembl/UMD3.1/Annotation/V
     "s3://ngi-igenomes/igenomes/Rattus_norvegicus/Ensembl/Rnor_6.0/Annotation/Variation/Rattus_norvegicus.vcf"
     "s3://ngi-igenomes/igenomes/Sus_scrofa/Ensembl/Sscrofa10.2/Annotation/Variation/Sus_scrofa.vcf")
 
+# One germline resource per build: Mutect2 takes a single --germline-resource,
+# so the gnomAD alternatives go to a_skip below.
 a_germline_resource=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/af-only-gnomad.raw.sites.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh37.PASS.AC.AF.only.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/af-only-gnomad.hg38.vcf.gz"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only.vcf.gz")
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/af-only-gnomad.hg38.vcf.gz")
 
 a_hapmap=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/hapmap_3.3.b37.vcf.gz"
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/hapmap_3.3.hg38.vcf.gz"
@@ -676,7 +668,81 @@ a_other=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/CEUTrio.HiSeq.WGS.b37
 
 a_skip=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/dbsnp_138.b37.vcf"
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/1000G_phase1.indels.b37.vcf"
-    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.b37.vcf")
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.b37.vcf"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh37.PASS.AC.AF.only.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_138.hg38.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_144.hg38.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.excluding_sites_after_129.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.excluding_sites_after_129.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_138.hg38.vcf.gz"
+    "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_144.hg38.vcf.gz")
+
+# Exact url -> category lookup. Matching by substring, as this used to do, is
+# unsafe: several skip entries are prefixes of the .vcf.gz they sit next to
+# (dbsnp_138.b37.vcf within dbsnp_138.b37.vcf.gz), and the right hand side of
+# =~ is a regex, so the dots in every filename are wildcards.
+declare -A vcf_category_of=()
+for u in "${a_dbsnp[@]}";             do vcf_category_of[$u]="dbsnp"; done
+for u in "${a_known_indels[@]}";      do vcf_category_of[$u]="known_indels"; done
+for u in "${a_known_snps[@]}";        do vcf_category_of[$u]="known_snps"; done
+for u in "${a_germline_resource[@]}"; do vcf_category_of[$u]="germline_resource"; done
+for u in "${a_hapmap[@]}";            do vcf_category_of[$u]="hapmap"; done
+for u in "${a_pon[@]}";               do vcf_category_of[$u]="pon"; done
+for u in "${a_other[@]}";             do vcf_category_of[$u]="other"; done
+for u in "${a_skip[@]}";              do vcf_category_of[$u]="skip"; done
+
+# VCF entries are accumulated per (file, category) and emitted once at the end,
+# so a category holding several files becomes a YAML list instead of repeating
+# the same key. NA marks a vcf with no .tbi in the bundle and becomes null.
+declare -a vcf_order=()
+declare -A vcf_acc=() tbi_acc=() src_acc=()
+
+# emit "  key: value" for a single file, or a 4-space list for several
+emit_vcf_key() {
+    local yaml="$1" prefix="$2"
+    shift 2
+    local -a vals=("$@") out=() v
+    for v in "${vals[@]}"; do
+        if [ "$v" = "NA" ]; then out+=("null"); else out+=("\"$v\""); fi
+    done
+    if [ ${#out[@]} -eq 1 ]; then
+        echo "  ${prefix}: ${out[0]}" >> "$yaml"
+        return
+    fi
+    echo "  ${prefix}:" >> "$yaml"
+    for v in "${out[@]}"; do
+        echo "    - ${v}" >> "$yaml"
+    done
+}
+
+# true when at least one entry is a real index (so a key should be emitted)
+has_index() {
+    local v
+    for v in "$@"; do
+        [ "$v" != "NA" ] && return 0
+    done
+    return 1
+}
+
+flush_vcf_yaml() {
+    local key yaml prefix
+    for key in "${vcf_order[@]}"; do
+        yaml="igenomes/${key%%|*}"
+        prefix="vcf_${key#*|}_vcf"
+        emit_vcf_key "$yaml" "$prefix" ${vcf_acc[$key]}
+        if has_index ${tbi_acc[$key]}; then
+            emit_vcf_key "$yaml" "${prefix}_tbi" ${tbi_acc[$key]}
+        fi
+        if [ -n "${src_acc[$key]+x}" ]; then
+            echo "  ${prefix}_source: \"${src_acc[$key]}\"" >> "$yaml"
+        fi
+    done
+}
 
 for i in `cat tmp_vcf.txt`;
 do
@@ -707,35 +773,15 @@ do
         source_vcf="unknown"
     fi
 
-    if [[ ${a_skip[@]} =~ $i ]]
-    then
-        echo "${i}"
-        echo "skipping"
-        continue
-    elif [[ ${a_dbsnp[@]} =~ $i ]]
-    then
-        vcf_category="dbsnp"
-    elif [[ ${a_known_indels[@]} =~ $i ]]
-    then
-        vcf_category="known_indels"
-    elif [[ ${a_known_snps[@]} =~ $i ]]
-    then
-        vcf_category="known_snps"
-    elif [[ ${a_germline_resource[@]} =~ $i ]]
-    then
-        vcf_category="germline_resource"
-    elif [[ ${a_hapmap[@]} =~ $i ]]
-    then
-        vcf_category="hapmap"
-    elif [[ ${a_pon[@]} =~ $i ]]
-    then
-        vcf_category="pon"
-    elif [[ ${a_other[@]} =~ $i ]]
-    then
-        vcf_category="other"
-    else
+    vcf_category="${vcf_category_of[$i]:-}"
+    if [ -z "${vcf_category}" ]; then
         echo "${i}"
         echo "not categorised"
+        continue
+    fi
+    if [ "${vcf_category}" = "skip" ]; then
+        echo "${i}"
+        echo "skipping"
         continue
     fi
 
@@ -743,20 +789,35 @@ do
         echo "- genome: \"${build}\"" > igenomes/${genome}/${build_name}
         echo "  source: \"${genome}\"" >> igenomes/${genome}/${build_name}
         echo "  species: \"${species}\"" >> igenomes/${genome}/${build_name}
-        echo "  vcf:" >> igenomes/${genome}/${build_name}
     fi
 
-    echo "  vcf_${vcf_category}_vcf: \"${i}\"" >> igenomes/${genome}/${build_name}
-
-    grep -q ${i}.idx manifest.txt && echo "  vcf_${vcf_category}_vcf_idx: \"${i}.idx\"" >> igenomes/${genome}/${build_name}
-    grep -q ${i}.tbi manifest.txt && echo "  vcf_${vcf_category}_vcf_tbi: \"${i}.tbi\"" >> igenomes/${genome}/${build_name}
-
-    if [[ ${source_vcf} = "unknown" ]]; then
-        continue
+    vcf_key="${genome}/${build_name}|${vcf_category}"
+    if [ -z "${vcf_acc[$vcf_key]+x}" ]; then
+        vcf_order+=("$vcf_key")
+        vcf_acc[$vcf_key]=""
+        tbi_acc[$vcf_key]=""
     fi
 
-    echo "  vcf_${vcf_category}_vcf_source: \"${source_vcf}\"" >> igenomes/${genome}/${build_name}
+    vcf_acc[$vcf_key]="${vcf_acc[$vcf_key]}${vcf_acc[$vcf_key]:+ }${i}"
+
+    if grep -q "${i}\.tbi" manifest.txt; then
+        tbi_acc[$vcf_key]="${tbi_acc[$vcf_key]}${tbi_acc[$vcf_key]:+ }${i}.tbi"
+    else
+        tbi_acc[$vcf_key]="${tbi_acc[$vcf_key]}${tbi_acc[$vcf_key]:+ }NA"
+    fi
+
+    # a category normally resolves to one source, so a second differing value
+    # means the path layout changed and the datasheet would silently drop one
+    if [ "${source_vcf}" != "unknown" ]; then
+        if [ -n "${src_acc[$vcf_key]+x}" ] && [ "${src_acc[$vcf_key]}" != "${source_vcf}" ]; then
+            echo "conflicting _source for ${vcf_key}: '${src_acc[$vcf_key]}' vs '${source_vcf}'" >&2
+            exit 1
+        fi
+        src_acc[$vcf_key]="${source_vcf}"
+    fi
 done
+
+flush_vcf_yaml
 
 echo "Fixing /GATK/GRCh37.yml name to GATK/GRCh37decoy.yml"
 

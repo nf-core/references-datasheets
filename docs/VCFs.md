@@ -27,20 +27,13 @@ The following vcf files are categorized into the following groups:
 
 #### dbsnp
 
+One per build, since dbsnp is single-file for its consumers. See "Dropping these
+files" for the superseded versions that are not catalogued.
+
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/dbsnp_138.b37.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_138.hg38.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_144.hg38.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_146.hg38.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.excluding_sites_after_129.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.excluding_sites_after_129.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_138.hg38.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_144.hg38.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_146.hg38.vcf.gz
 
 #### known_indels
@@ -82,10 +75,11 @@ s3://ngi-igenomes/igenomes/Sus_scrofa/Ensembl/Sscrofa10.2/Annotation/Variation/S
 
 #### germline_resource
 
+One per build, since Mutect2 takes a single germline resource. See "Dropping these
+files" for the gnomAD versions that are not catalogued.
+
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/af-only-gnomad.raw.sites.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh37.PASS.AC.AF.only.vcf.gz
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/af-only-gnomad.hg38.vcf.gz
-s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only.vcf.gz
 
 #### hapmap
 
@@ -127,20 +121,58 @@ s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/NISTIntegratedCalls.hg38.
 
 #### Dropping these files
 
+Uncompressed duplicates, already present as vcf.gz:
+
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/dbsnp_138.b37.vcf
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/1000G_phase1.indels.b37.vcf
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.b37.vcf
 
-They are vcf, but there is already a vcf.gz version of them.
+Superseded versions of a category whose consumer takes a single file, so the
+datasheet keeps only the one the pipelines use:
+
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh37.PASS.AC.AF.only.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_138.hg38.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/dbsnp_144.hg38.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GermlineResource/gnomAD.r2.1.1.GRCh38.PASS.AC.AF.only.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/dbsnp_138.b37.excluding_sites_after_129.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/dbsnp_138.hg19.excluding_sites_after_129.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/beta/Homo_sapiens_assembly38.dbsnp138.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_138.hg38.vcf.gz
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg38/dbsnp_144.hg38.vcf.gz
+
+All of these are listed in `a_skip` in the generator, so regenerating does not
+bring them back.
 
 ### Assets with malformed vcf entries
 
-These needs to be fixed, but updating the assets format and the script to generate these assets.
-But it'll depend on the schema from references.
+The generator wrote one `vcf_<category>_vcf` line per file, so a category holding several
+files repeated the same key. A standard YAML parser keeps only the last value, so every
+earlier file in that category was lost on load.
 
-- assets/igenomes/Homo_sapiens/GATK/b37.yml
-- assets/igenomes/Homo_sapiens/GATK/GRCh37decoy.yml
-- assets/igenomes/Homo_sapiens/GATK/GRCh38.yml
-- assets/igenomes/Homo_sapiens/GATK/hg38.yml
-- assets/igenomes/Homo_sapiens/UCSC/hg19.yml
-- assets/igenomes/Mus_musculus/Ensembl/GRCm38.yml
+These files were affected. Each repeated key is now a single key holding a list, with the
+files in the order they first appeared. A category with one file keeps a plain string, so
+string-typed consumers are unaffected.
+
+- igenomes/GATK/b37.yml
+- igenomes/GATK/GRCh37decoy.yml
+- igenomes/GATK/GRCh38.yml
+- igenomes/GATK/hg19.yml
+- igenomes/GATK/hg38.yml
+- igenomes/Ensembl/GRCm38.yml
+
+Where a `_tbi` key exists, it holds one entry per file in the same order. Some files in
+the bundle have no index, and those positions are `null`. A category whose files have no
+index at all gets no `_tbi` key, rather than a list of nulls.
+
+`vcf_dbsnp_vcf` and `vcf_germline_resource_vcf` stay a single string, keeping only the
+file the pipelines use. Their consumers take one file each (GenotypeGVCFs a single
+`--dbsnp`, Mutect2 a single `--germline-resource`), so a list would not validate. The
+superseded versions are listed in `a_skip` in the generator so regenerating does not
+bring them back.
+
+`bin/generate_datasheet.sh` writes this form now, so regenerating the assets no longer
+reintroduces repeated keys. `prek.toml` no longer excludes `igenomes/`, so yamllint's
+`key-duplicates` rule covers these files in CI.
