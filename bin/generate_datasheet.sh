@@ -678,6 +678,57 @@ a_skip=("s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBund
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/1000G_phase1.indels.b37.vcf"
     "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh37/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.b37.vcf")
 
+# VCF entries are accumulated per (file, category) and emitted once at the end,
+# so a category holding several files becomes a YAML list instead of repeating
+# the same key. NA marks a vcf with no .tbi/.idx in the bundle and becomes null.
+declare -a vcf_order=()
+declare -A vcf_acc=() tbi_acc=() idx_acc=() src_acc=()
+
+# emit "  key: value" for a single file, or a 4-space list for several
+emit_vcf_key() {
+    local yaml="$1" prefix="$2"
+    shift 2
+    local -a vals=("$@") out=() v
+    for v in "${vals[@]}"; do
+        if [ "$v" = "NA" ]; then out+=("null"); else out+=("\"$v\""); fi
+    done
+    if [ ${#out[@]} -eq 1 ]; then
+        echo "  ${prefix}: ${out[0]}" >> "$yaml"
+        return
+    fi
+    echo "  ${prefix}:" >> "$yaml"
+    for v in "${out[@]}"; do
+        echo "    - ${v}" >> "$yaml"
+    done
+}
+
+# true when at least one entry is a real index (so a key should be emitted)
+has_index() {
+    local v
+    for v in "$@"; do
+        [ "$v" != "NA" ] && return 0
+    done
+    return 1
+}
+
+flush_vcf_yaml() {
+    local key yaml prefix
+    for key in "${vcf_order[@]}"; do
+        yaml="igenomes/${key%%|*}"
+        prefix="vcf_${key#*|}_vcf"
+        emit_vcf_key "$yaml" "$prefix" ${vcf_acc[$key]}
+        if has_index ${tbi_acc[$key]}; then
+            emit_vcf_key "$yaml" "${prefix}_tbi" ${tbi_acc[$key]}
+        fi
+        if has_index ${idx_acc[$key]}; then
+            emit_vcf_key "$yaml" "${prefix}_idx" ${idx_acc[$key]}
+        fi
+        if [ -n "${src_acc[$key]+x}" ]; then
+            echo "  ${prefix}_source: \"${src_acc[$key]}\"" >> "$yaml"
+        fi
+    done
+}
+
 for i in `cat tmp_vcf.txt`;
 do
     species=$(echo $i | cut -d "/" -f 5)
@@ -743,20 +794,36 @@ do
         echo "- genome: \"${build}\"" > igenomes/${genome}/${build_name}
         echo "  source: \"${genome}\"" >> igenomes/${genome}/${build_name}
         echo "  species: \"${species}\"" >> igenomes/${genome}/${build_name}
-        echo "  vcf:" >> igenomes/${genome}/${build_name}
     fi
 
-    echo "  vcf_${vcf_category}_vcf: \"${i}\"" >> igenomes/${genome}/${build_name}
-
-    grep -q ${i}.idx manifest.txt && echo "  vcf_${vcf_category}_vcf_idx: \"${i}.idx\"" >> igenomes/${genome}/${build_name}
-    grep -q ${i}.tbi manifest.txt && echo "  vcf_${vcf_category}_vcf_tbi: \"${i}.tbi\"" >> igenomes/${genome}/${build_name}
-
-    if [[ ${source_vcf} = "unknown" ]]; then
-        continue
+    vcf_key="${genome}/${build_name}|${vcf_category}"
+    if [ -z "${vcf_acc[$vcf_key]+x}" ]; then
+        vcf_order+=("$vcf_key")
+        vcf_acc[$vcf_key]=""
+        tbi_acc[$vcf_key]=""
+        idx_acc[$vcf_key]=""
     fi
 
-    echo "  vcf_${vcf_category}_vcf_source: \"${source_vcf}\"" >> igenomes/${genome}/${build_name}
+    vcf_acc[$vcf_key]="${vcf_acc[$vcf_key]}${vcf_acc[$vcf_key]:+ }${i}"
+
+    if grep -q "${i}\.tbi" manifest.txt; then
+        tbi_acc[$vcf_key]="${tbi_acc[$vcf_key]}${tbi_acc[$vcf_key]:+ }${i}.tbi"
+    else
+        tbi_acc[$vcf_key]="${tbi_acc[$vcf_key]}${tbi_acc[$vcf_key]:+ }NA"
+    fi
+
+    if grep -q "${i}\.idx" manifest.txt; then
+        idx_acc[$vcf_key]="${idx_acc[$vcf_key]}${idx_acc[$vcf_key]:+ }${i}.idx"
+    else
+        idx_acc[$vcf_key]="${idx_acc[$vcf_key]}${idx_acc[$vcf_key]:+ }NA"
+    fi
+
+    if [ "${source_vcf}" != "unknown" ]; then
+        src_acc[$vcf_key]="${source_vcf}"
+    fi
 done
+
+flush_vcf_yaml
 
 echo "Fixing /GATK/GRCh37.yml name to GATK/GRCh37decoy.yml"
 

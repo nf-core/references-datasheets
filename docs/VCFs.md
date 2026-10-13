@@ -135,12 +135,25 @@ They are vcf, but there is already a vcf.gz version of them.
 
 ### Assets with malformed vcf entries
 
-These needs to be fixed, but updating the assets format and the script to generate these assets.
-But it'll depend on the schema from references.
+The generator wrote one `vcf_<category>_vcf` line per file, so a category holding several
+files repeated the same key. A standard YAML parser keeps only the last value, so every
+earlier file in that category was lost on load.
 
-- assets/igenomes/Homo_sapiens/GATK/b37.yml
-- assets/igenomes/Homo_sapiens/GATK/GRCh37decoy.yml
-- assets/igenomes/Homo_sapiens/GATK/GRCh38.yml
-- assets/igenomes/Homo_sapiens/GATK/hg38.yml
-- assets/igenomes/Homo_sapiens/UCSC/hg19.yml
-- assets/igenomes/Mus_musculus/Ensembl/GRCm38.yml
+These files were affected. Each repeated key is now a single key holding a list, with the
+files in the order they first appeared. A category with one file keeps a plain string, so
+string-typed consumers are unaffected.
+
+- igenomes/GATK/b37.yml
+- igenomes/GATK/GRCh37decoy.yml
+- igenomes/GATK/GRCh38.yml
+- igenomes/GATK/hg19.yml
+- igenomes/GATK/hg38.yml
+- igenomes/Ensembl/GRCm38.yml
+
+Where a `_tbi` or `_idx` key exists, it holds one entry per file in the same order. Some
+files in the bundle have no index, and those positions are `null`. A category whose files
+have no index at all gets no `_tbi` key, rather than a list of nulls.
+
+`bin/generate_datasheet.sh` writes this form now, so regenerating the assets no longer
+reintroduces repeated keys. `prek.toml` no longer excludes `igenomes/`, so yamllint's
+`key-duplicates` rule covers these files in CI.
