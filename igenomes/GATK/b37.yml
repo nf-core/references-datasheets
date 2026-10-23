@@ -1,5 +1,5 @@
 - genome: "b37"
-  source: "GATK"
+  reference_source: "GATK"
   species: "Homo_sapiens"
   vcf_known_snps_vcf:
     - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/b37/1000G_omni2.5.b37.vcf.gz"

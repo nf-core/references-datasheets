@@ -1,7 +1,7 @@
 # Created with nf-core/references
 # Source yaml: genomes_source/Homo_sapiens/GATK/GRCh38_chr22.yml
 - genome: GRCh38_chr22
-  source: nf-core
+  reference_source: nf-core
   species: Homo_sapiens
   fasta: s3://nf-core-references/test_data/Homo_sapiens/nf-core/references/testdata.GRCh38_chr22/Sequence/WholeGenomeFasta/genome.fasta
   fasta_fai: s3://nf-core-references/test_data/Homo_sapiens/nf-core/references/testdata.GRCh38_chr22/Sequence/WholeGenomeFasta/genome.fasta.fai

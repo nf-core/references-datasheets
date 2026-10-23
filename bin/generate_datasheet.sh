@@ -102,7 +102,7 @@ do
 
     echo "- genome: \"${build}\"" > igenomes/${genome}/${build_name}
     echo "  fasta: \"${i::-4}\"" >> igenomes/${genome}/${build_name}
-    echo "  source: \"${genome}\"" >> igenomes/${genome}/${build_name}
+    echo "  reference_source: \"${genome}\"" >> igenomes/${genome}/${build_name}
     echo "  species: \"${species}\"" >> igenomes/${genome}/${build_name}
     echo "  fasta_fai: \"${i}\"" >> igenomes/${genome}/${build_name}
 done
@@ -787,7 +787,7 @@ do
 
     if ! [ -f igenomes/${genome}/${build_name} ]; then
         echo "- genome: \"${build}\"" > igenomes/${genome}/${build_name}
-        echo "  source: \"${genome}\"" >> igenomes/${genome}/${build_name}
+        echo "  reference_source: \"${genome}\"" >> igenomes/${genome}/${build_name}
         echo "  species: \"${species}\"" >> igenomes/${genome}/${build_name}
     fi
 

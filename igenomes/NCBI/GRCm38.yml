@@ -1,6 +1,6 @@
 - genome: "GRCm38"
   fasta: "s3://ngi-igenomes/igenomes/Mus_musculus/NCBI/GRCm38/Sequence/WholeGenomeFasta/genome.fa"
-  source: "NCBI"
+  reference_source: "NCBI"
   species: "Mus_musculus"
   fasta_fai: "s3://ngi-igenomes/igenomes/Mus_musculus/NCBI/GRCm38/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "s3://ngi-igenomes/igenomes/Mus_musculus/NCBI/GRCm38/Annotation/README.txt"
