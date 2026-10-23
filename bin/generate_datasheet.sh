@@ -21,6 +21,17 @@ while getopts ":adr" opt; do
     esac
 done
 
+# Write manifest paths with the igenomes root as a placeholder, so a
+# regenerated datasheet keeps ${params.references_base_path} instead of a
+# hardcoded root. Other roots, including the scratch manifest, stay literal.
+as_value() {
+    local p="$1"
+    case "$p" in
+        s3://ngi-igenomes/igenomes/*) p="\${params.references_base_path}${p#s3://ngi-igenomes/igenomes}" ;;
+    esac
+    printf '%s' "$p"
+}
+
 if [[ ${DOWNLOAD_MANIFEST} ]]; then
     rm -f manifest.txt
     echo "Downloading manifest"
@@ -101,10 +112,10 @@ do
     mkdir -p igenomes/${genome}
 
     echo "- genome: \"${build}\"" > igenomes/${genome}/${build_name}
-    echo "  fasta: \"${i::-4}\"" >> igenomes/${genome}/${build_name}
+    echo "  fasta: \"$(as_value "${i::-4}")\"" >> igenomes/${genome}/${build_name}
     echo "  reference_source: \"${genome}\"" >> igenomes/${genome}/${build_name}
     echo "  species: \"${species}\"" >> igenomes/${genome}/${build_name}
-    echo "  fasta_fai: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  fasta_fai: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source README
@@ -129,7 +140,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  readme: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  readme: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source gtf (removing the onces coming from gencode)
@@ -154,7 +165,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  gtf: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  gtf: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source fasta.dict
@@ -179,7 +190,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  fasta_dict: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  fasta_dict: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source genes.bed
@@ -204,7 +215,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  genes_bed: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  genes_bed: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source BowtieIndex
@@ -229,7 +240,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  bowtie1_index: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  bowtie1_index: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source Bowtie2Index
@@ -254,7 +265,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  bowtie2_index: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  bowtie2_index: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source BWAIndex (we have version0.6.0, version0.5.x, and no version specified)
@@ -282,7 +293,7 @@ do
     # Remove existing bwamem1_index if present
     # So that we only keep the latest version
     sed -i '\|bwamem1_index|d' igenomes/${genome}/${build_name}
-    echo "  bwamem1_index: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  bwamem1_index: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source BWAmem2mem
@@ -307,7 +318,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  bwamem2_index: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  bwamem2_index: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source Dragmap
@@ -332,7 +343,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  dragmap_hashtable: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  dragmap_hashtable: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source BismarkIndex
@@ -357,7 +368,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  bismark_index: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  bismark_index: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source star Index
@@ -382,7 +393,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  star_index: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  star_index: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source Chromosomes fasta
@@ -407,7 +418,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  chromosomes_fasta: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  chromosomes_fasta: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source AbundantSequences fasta
@@ -432,7 +443,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  abundantsequences_fasta: \"${i}/\"" >> igenomes/${genome}/${build_name}
+    echo "  abundantsequences_fasta: \"$(as_value "${i}/")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source refFlat (removing the ones coming from gencode)
@@ -457,7 +468,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  genes_refflat: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  genes_refflat: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source refgene
@@ -482,7 +493,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  genes_refgene: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  genes_refgene: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source ChromInfo.txt
@@ -507,7 +518,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  chrom_info: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  chrom_info: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source GenomeSize.xml (removing the old ones)
@@ -532,7 +543,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  genome_size_xml: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  genome_size_xml: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source hairpin.fa
@@ -557,7 +568,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  hairpin_fasta: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  hairpin_fasta: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source mature.fa
@@ -582,7 +593,7 @@ do
         build_name="${species}_${build}.yml"
     fi
 
-    echo "  mature_fasta: \"${i}\"" >> igenomes/${genome}/${build_name}
+    echo "  mature_fasta: \"$(as_value "${i}")\"" >> igenomes/${genome}/${build_name}
 done
 
 # All source vcf
@@ -708,7 +719,7 @@ emit_vcf_key() {
     shift 2
     local -a vals=("$@") out=() v
     for v in "${vals[@]}"; do
-        if [ "$v" = "NA" ]; then out+=("null"); else out+=("\"$v\""); fi
+        if [ "$v" = "NA" ]; then out+=("null"); else out+=("\"$(as_value "$v")\""); fi
     done
     if [ ${#out[@]} -eq 1 ]; then
         echo "  ${prefix}: ${out[0]}" >> "$yaml"
