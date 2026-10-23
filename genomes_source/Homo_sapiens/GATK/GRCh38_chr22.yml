@@ -1,6 +1,6 @@
 - genome: GRCh38_chr22
   fasta: https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta
-  source: nf-core
+  reference_source: nf-core
   species: Homo_sapiens
   vcf_dbsnp_vcf: https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz
   vcf_dbsnp_vcf_source: GATK_BUNDLE

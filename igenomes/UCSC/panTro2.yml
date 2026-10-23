@@ -1,6 +1,6 @@
 - genome: "panTro2"
   fasta: "${params.references_base_path}/Pan_troglodytes/UCSC/panTro2/Sequence/WholeGenomeFasta/genome.fa"
-  source: "UCSC"
+  reference_source: "UCSC"
   species: "Pan_troglodytes"
   fasta_fai: "${params.references_base_path}/Pan_troglodytes/UCSC/panTro2/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Pan_troglodytes/UCSC/panTro2/Annotation/README.txt"

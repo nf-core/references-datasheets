@@ -1,6 +1,6 @@
 - genome: "2001-10-15"
   fasta: "${params.references_base_path}/Escherichia_coli_K_12_MG1655/NCBI/2001-10-15/Sequence/WholeGenomeFasta/genome.fa"
-  source: "NCBI"
+  reference_source: "NCBI"
   species: "Escherichia_coli_K_12_MG1655"
   fasta_fai: "${params.references_base_path}/Escherichia_coli_K_12_MG1655/NCBI/2001-10-15/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Escherichia_coli_K_12_MG1655/NCBI/2001-10-15/Annotation/README.txt"

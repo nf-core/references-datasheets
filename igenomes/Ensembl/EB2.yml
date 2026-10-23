@@ -1,6 +1,6 @@
 - genome: "EB2"
   fasta: "${params.references_base_path}/Bacillus_subtilis_168/Ensembl/EB2/Sequence/WholeGenomeFasta/genome.fa"
-  source: "Ensembl"
+  reference_source: "Ensembl"
   species: "Bacillus_subtilis_168"
   fasta_fai: "${params.references_base_path}/Bacillus_subtilis_168/Ensembl/EB2/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Bacillus_subtilis_168/Ensembl/EB2/Annotation/README.txt"

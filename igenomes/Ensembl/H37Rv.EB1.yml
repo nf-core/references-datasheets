@@ -1,6 +1,6 @@
 - genome: "H37Rv.EB1"
   fasta: "${params.references_base_path}/Mycobacterium_tuberculosis_H37RV/Ensembl/H37Rv.EB1/Sequence/WholeGenomeFasta/genome.fa"
-  source: "Ensembl"
+  reference_source: "Ensembl"
   species: "Mycobacterium_tuberculosis_H37RV"
   fasta_fai: "${params.references_base_path}/Mycobacterium_tuberculosis_H37RV/Ensembl/H37Rv.EB1/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Mycobacterium_tuberculosis_H37RV/Ensembl/H37Rv.EB1/Annotation/README.txt"

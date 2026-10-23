@@ -1,6 +1,6 @@
 - genome: "2005-10-07"
   fasta: "${params.references_base_path}/Rhodobacter_sphaeroides_2.4.1/NCBI/2005-10-07/Sequence/WholeGenomeFasta/genome.fa"
-  source: "NCBI"
+  reference_source: "NCBI"
   species: "Rhodobacter_sphaeroides_2.4.1"
   fasta_fai: "${params.references_base_path}/Rhodobacter_sphaeroides_2.4.1/NCBI/2005-10-07/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Rhodobacter_sphaeroides_2.4.1/NCBI/2005-10-07/Annotation/README.txt"

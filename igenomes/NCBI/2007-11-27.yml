@@ -1,6 +1,6 @@
 - genome: "2007-11-27"
   fasta: "${params.references_base_path}/Sorangium_cellulosum_So_ce_56/NCBI/2007-11-27/Sequence/WholeGenomeFasta/genome.fa"
-  source: "NCBI"
+  reference_source: "NCBI"
   species: "Sorangium_cellulosum_So_ce_56"
   fasta_fai: "${params.references_base_path}/Sorangium_cellulosum_So_ce_56/NCBI/2007-11-27/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Sorangium_cellulosum_So_ce_56/NCBI/2007-11-27/Annotation/README.txt"

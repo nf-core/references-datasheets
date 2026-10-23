@@ -1,6 +1,6 @@
 - genome: "GRCh37"
   fasta: "${params.references_base_path}/Homo_sapiens/GATK/GRCh37/Sequence/WholeGenomeFasta/human_g1k_v37_decoy.fasta"
-  source: "GATK"
+  reference_source: "GATK"
   species: "Homo_sapiens"
   fasta_fai: "${params.references_base_path}/Homo_sapiens/GATK/GRCh37/Sequence/WholeGenomeFasta/human_g1k_v37_decoy.fasta.fai"
   fasta_dict: "${params.references_base_path}/Homo_sapiens/GATK/GRCh37/Sequence/WholeGenomeFasta/human_g1k_v37_decoy.dict"

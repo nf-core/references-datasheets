@@ -1,6 +1,6 @@
 - genome: "WASHUC2"
   fasta: "${params.references_base_path}/Gallus_gallus/Ensembl/WASHUC2/Sequence/WholeGenomeFasta/genome.fa"
-  source: "Ensembl"
+  reference_source: "Ensembl"
   species: "Gallus_gallus"
   fasta_fai: "${params.references_base_path}/Gallus_gallus/Ensembl/WASHUC2/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Gallus_gallus/Ensembl/WASHUC2/Annotation/README.txt"

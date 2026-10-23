@@ -1,6 +1,6 @@
 - genome: "build2.1"
   fasta: "${params.references_base_path}/Gallus_gallus/NCBI/build2.1/Sequence/WholeGenomeFasta/genome.fa"
-  source: "NCBI"
+  reference_source: "NCBI"
   species: "Gallus_gallus"
   fasta_fai: "${params.references_base_path}/Gallus_gallus/NCBI/build2.1/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Gallus_gallus/NCBI/build2.1/Annotation/README.txt"

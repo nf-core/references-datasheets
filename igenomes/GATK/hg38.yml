@@ -1,6 +1,6 @@
 - genome: "hg38"
   fasta: "${params.references_base_path}/Homo_sapiens/GATK/hg38/Homo_sapiens_assembly38.fasta"
-  source: "GATK"
+  reference_source: "GATK"
   species: "Homo_sapiens"
   fasta_fai: "${params.references_base_path}/Homo_sapiens/GATK/hg38/Homo_sapiens_assembly38.fasta.fai"
   fasta_dict: "${params.references_base_path}/Homo_sapiens/GATK/hg38/Homo_sapiens_assembly38.dict"

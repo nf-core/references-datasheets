@@ -1,6 +1,6 @@
 - genome: "Sbi1"
   fasta: "${params.references_base_path}/Sorghum_bicolor/Ensembl/Sbi1/Sequence/WholeGenomeFasta/genome.fa"
-  source: "Ensembl"
+  reference_source: "Ensembl"
   species: "Sorghum_bicolor"
   fasta_fai: "${params.references_base_path}/Sorghum_bicolor/Ensembl/Sbi1/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Sorghum_bicolor/Ensembl/Sbi1/Annotation/README.txt"

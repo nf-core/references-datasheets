@@ -1,6 +1,6 @@
 - genome: "EB1"
   fasta: "${params.references_base_path}/Escherichia_coli_K_12_DH10B/Ensembl/EB1/Sequence/WholeGenomeFasta/genome.fa"
-  source: "Ensembl"
+  reference_source: "Ensembl"
   species: "Escherichia_coli_K_12_DH10B"
   fasta_fai: "${params.references_base_path}/Escherichia_coli_K_12_DH10B/Ensembl/EB1/Sequence/WholeGenomeFasta/genome.fa.fai"
   readme: "${params.references_base_path}/Escherichia_coli_K_12_DH10B/Ensembl/EB1/Annotation/README.txt"
