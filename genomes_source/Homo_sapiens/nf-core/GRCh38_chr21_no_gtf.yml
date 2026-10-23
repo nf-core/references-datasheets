@@ -3,7 +3,7 @@
   gff: https://raw.githubusercontent.com/nf-core/test-datasets/references/references/GRCh38_chr21/genes_chr21.gff
   mito_name: MT
   readme: https://raw.githubusercontent.com/nf-core/test-datasets/references/references/GRCh38_chr21/README.md
-  source: nf-core
+  reference_source: nf-core
   species: Homo_sapiens
   # macs_gsize:                1.2e7
   vcf_dbsnp_vcf: https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/vcf/dbsnp_146.hg38.vcf.gz

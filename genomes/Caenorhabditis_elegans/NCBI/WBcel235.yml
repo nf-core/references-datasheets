@@ -1,6 +1,6 @@
 - genome: WBcel235
-  source: NCBI
-  source_version: GCF_000002985.6
+  reference_source: NCBI
+  annotation_version: GCF_000002985.6
   species: Caenorhabditis_elegans
   bowtie1_index: s3://nf-core-references-scratch/genomes/Caenorhabditis_elegans/NCBI/WBcel235/Sequence/BowtieIndex/version1.3.1/
   bowtie2_index: s3://nf-core-references-scratch/genomes/Caenorhabditis_elegans/NCBI/WBcel235/Sequence/Bowtie2Index/version2.5.2/

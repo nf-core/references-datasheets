@@ -1,5 +1,5 @@
 - genome: "hg19"
-  source: "GATK"
+  reference_source: "GATK"
   species: "Homo_sapiens"
   vcf_known_snps_vcf:
     - "s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/hg19/1000G_omni2.5.hg19.sites.vcf.gz"
