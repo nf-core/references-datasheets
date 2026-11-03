@@ -10,6 +10,8 @@
   bwamem2_index: s3://nf-core-references/test_data/Homo_sapiens/nf-core/references/testdata.GRCh38_chr22/Sequence/BWAmem2Index/version2.2.1/
   dragmap_hashtable: s3://nf-core-references/test_data/Homo_sapiens/nf-core/references/testdata.GRCh38_chr22/Sequence/dragmap/version1.2.1/
   intervals_bed: s3://nf-core-references/test_data/Homo_sapiens/nf-core/references/testdata.GRCh38_chr22/Annotation/intervals/testdata.GRCh38_chr22.bed
+  contig_ploidy_priors_tsv: s3://nf-core-references/test_data/Homo_sapiens/nf-core/references/testdata.GRCh38_chr22/Annotation/ploidy_priors/contig_ploidy_priors_table.tsv
+  exclude_bed: s3://nf-core-references/test_data/Homo_sapiens/nf-core/references/testdata.GRCh38_chr22/Annotation/exclude/genome.blacklist_intervals.bed
   ngscheckmate_bed: s3://nf-core-references/test_data/Homo_sapiens/nf-core/references/testdata.GRCh38_chr22/Annotation/NGSCheckMate/SNP_GRCh38_hg38_wChr.bed
   snpeff_db: 'WBcel235.105'
   vep_cache_version: '113'
